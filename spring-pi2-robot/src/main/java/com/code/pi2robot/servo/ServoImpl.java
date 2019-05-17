@@ -1,14 +1,16 @@
 package com.code.pi2robot.servo;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.pi4j.wiringpi.Gpio;
 import com.pi4j.wiringpi.SoftPwm;
 
+@Primary
 @Component
 @Scope("prototype")
-public class Servo {
+public class ServoImpl implements Servo{
 
 	private int PIN_NUMBER;
 	private final static int minPosition = 4;
@@ -16,6 +18,7 @@ public class Servo {
 	private final static int midPositon = 14;
 	private int currPosition = 10;
 
+	@Override
 	public void servoInit(int pinIn) {
 		System.out.println("start servoINit: " + pinIn);
 		Gpio.wiringPiSetup();
@@ -30,6 +33,7 @@ public class Servo {
 		SoftPwm.softPwmWrite(PIN_NUMBER, currPosition);
 	}
 
+	@Override	
 	public void changeServoPosition(int nextPosition) {
 		if (nextPosition != currPosition && nextPosition >= minPosition && nextPosition <= maxPosition) {
 			currentPosition(nextPosition);
@@ -37,6 +41,7 @@ public class Servo {
 
 	}
 
+	@Override
 	public void moveServoTest() {
 		for (int x = 0; x < 1; x++) {
 			for (int i = minPosition; i <= maxPosition; i++) {

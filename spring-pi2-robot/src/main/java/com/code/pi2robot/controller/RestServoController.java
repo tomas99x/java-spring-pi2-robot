@@ -3,7 +3,6 @@ package com.code.pi2robot.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.code.pi2robot.service.ServoService;
 import com.pi4j.io.gpio.GpioController;
@@ -17,7 +16,6 @@ public class RestServoController {
 
 	@Autowired
 	ServoService servoService;
-
 
 	public static GpioPinDigitalOutput pin;
 
@@ -72,12 +70,22 @@ public class RestServoController {
 		return "REST test";
 
 	}
-	
+
 	@GetMapping("/walk")
 	public String walk() {
 
 		servoService.walking();
 		return "walking!!";
+	}
+
+	@GetMapping("/sequent/{sequence}")
+	public String sequentToMove(@PathVariable String sequence) {
+
+		System.out.println("sequence is: " + sequence);
+		servoService.movementsSequence(sequence);
+
+		return "sekwencja wykonana!!";
+
 	}
 
 }

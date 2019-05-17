@@ -13,4 +13,6 @@ public interface ServoService {
 	public void moveServo4();
 	
 	public void moveServoTo(int intPosition);
+
+	public void movementsSequence(String sequence);
 }
