@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.code.pi2robot.servo.Servo;
 
-
 @Service
 public class ServoServiceImpl implements ServoService {
 
@@ -59,95 +58,70 @@ public class ServoServiceImpl implements ServoService {
 		switch (intPosition / 100) {
 		case 1:
 			servo1.changeServoPosition(intPosition % 100);
+			System.out.println("move to pos: " + intPosition );
 			break;
 		case 2:
 			servo2.changeServoPosition(intPosition % 100);
+			System.out.println("move to pos: " + intPosition );
 			break;
 		case 3:
 			servo3.changeServoPosition(intPosition % 100);
+			System.out.println("move to pos: " + intPosition );
 			break;
 		case 4:
 			servo4.changeServoPosition(intPosition % 100);
+			System.out.println("move to pos: " + intPosition );
 			break;
 
 		default:
 			break;
 		}
 
-		// servo4.changeServoPosition(testInt%100);
-		System.out.println("move to pos: " + intPosition % 100);
+
 
 	}
 
 	@Override
-	public void walking() {
+	public void walk() {
 
-		servo1.changeServoPosition(10);
+		int[] stepsToWalk = {316 , 20 , 416 , 200 , 116 , 20 , 216 , 200 , 114 , 20 , 214 , 20 , 314 , 20 , 414 , 20 , 112 , 20 , 212 , 200 , 312 , 20 , 412 , 200 , 114 , 20 , 214 , 20 , 314 , 20 , 414 , 200};
 
-		servo2.changeServoPosition(10);
-
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		for (int i = 0; i < stepsToWalk.length; i+=2) {
+			moveServoTo(stepsToWalk[i]);
+			System.out.print("walk step : " + stepsToWalk[i] + "  ");
+			try {
+				Thread.sleep(stepsToWalk[i+1]);
+				System.out.println("walk time : " + stepsToWalk[i+1] );
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-
-		servo3.changeServoPosition(10);
-
-		servo4.changeServoPosition(10);
-
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		servo4.changeServoPosition(14);
-
-		servo3.changeServoPosition(14);
-
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		servo1.changeServoPosition(14);
-
-		servo2.changeServoPosition(14);
-
 	}
 
 	@Override
-	public void movementsSequence(String sequence) {
+	public void movementBySequence(String sequence) {
 
 		String[] sequenceTab = sequence.split("!");
 
 		for (String i : sequenceTab) {
-			  System.out.println(i);
-			}
-		
+			System.out.println(i);
+		}
+
 		for (int i = 0; i < sequenceTab.length; i += 2) {
 
 			moveServoTo(stringToInt(sequenceTab[i]));
-			
+
 			System.out.println("iiii: " + i);
-			
+
 			try {
 
 				Thread.sleep(stringToInt(sequenceTab[i + 1]));
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ArrayIndexOutOfBoundsException e) {
 				System.out.println("outside the array");
 			}
 		}
-		
-		
 
 	};
 

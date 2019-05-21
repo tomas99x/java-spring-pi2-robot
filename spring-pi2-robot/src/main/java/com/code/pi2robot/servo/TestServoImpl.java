@@ -4,26 +4,25 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-
+//@Primary
 @Component
 @Scope("prototype")
 public class TestServoImpl implements Servo {
-	
-	
-	//private int PIN_NUMBER;
+
+	// private int PIN_NUMBER;
 	private final static int minPosition = 4;
 	private final static int maxPosition = 24;
 	private final static int midPositon = 14;
 	private int currPosition = 10;
-	private String servoName ;
+	private String servoName;
 
 	@Override
 	public void servoInit(int pinIn) {
-		
+
 		System.out.println("start servoINit: " + pinIn);
 
 		currPosition = midPositon;
-		
+
 		switch (pinIn) {
 		case 0:
 			servoName = "servo1";
@@ -41,19 +40,17 @@ public class TestServoImpl implements Servo {
 		default:
 			break;
 		}
-		
-		System.out.println("Pin and positon: " + servoName + " , " +  currPosition);
-		
 
+		System.out.println("Pin and positon: " + servoName + " , " + currPosition);
 
 	}
 
 	@Override
 	public void changeServoPosition(int nextPosition) {
-		
+
 		currPosition = nextPosition;
-		
-		System.out.println("Pin and positon from changeServoPosition: " + servoName + " , " +  currPosition);
+
+		System.out.println("Pin and positon from changeServoPosition: " + servoName + " , " + currPosition);
 
 	}
 
@@ -64,8 +61,7 @@ public class TestServoImpl implements Servo {
 			for (int i = minPosition; i <= maxPosition; i++) {
 
 				currPosition = i;
-				System.out.println("Pin and positon from moveServoTest in loop: " + servoName + " , " +  currPosition);
-
+				System.out.println("Pin and positon from moveServoTest in loop: " + servoName + " , " + currPosition);
 
 				try {
 					Thread.sleep(1120);
@@ -76,7 +72,7 @@ public class TestServoImpl implements Servo {
 			}
 		}
 		currPosition = midPositon;
-		System.out.println("Pin and positon from moveServoTest: " + servoName + " , " +  currPosition);
+		System.out.println("Pin and positon from moveServoTest: " + servoName + " , " + currPosition);
 
 	}
 

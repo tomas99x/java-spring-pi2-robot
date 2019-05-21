@@ -26,6 +26,7 @@ public class RestServoController {
 
 	@GetMapping("/light")
 	public String light() {
+		
 		if (pin == null) {
 			GpioController gpio = GpioFactory.getInstance();
 			pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "My LED", PinState.LOW);
@@ -36,55 +37,59 @@ public class RestServoController {
 	}
 
 	@GetMapping("/servo1")
-	public String servo() {
+	public String TestServo1() {
 
 		servoService.moveServo1();
 		return "servo on!!";
+		
 	}
 
 	@GetMapping("/servo2")
-	public String servo2() {
+	public String TestServo2() {
 
 		servoService.moveServo2();
 		return "servo2 on!!";
+		
 	}
 
 	@GetMapping("/servo3")
-	public String servo3() {
+	public String TestServo3() {
 
 		servoService.moveServo3();
 		return "servo3 on!!";
+		
 	}
 
 	@GetMapping("/servo4")
-	public String servo4() {
+	public String TestServo4() {
 
 		servoService.moveServo4();
 		return "servo4 on!!";
+		
 	}
 
 	@GetMapping("/test/{intPosition}")
 	public String getStudents(@PathVariable int intPosition) {
 
 		servoService.moveServoTo(intPosition);
-		return "REST test";
+		return "move to position" + intPosition;
 
 	}
 
 	@GetMapping("/walk")
 	public String walk() {
 
-		servoService.walking();
-		return "walking!!";
+		servoService.walk();
+		return "I am walking!!";
+		
 	}
 
 	@GetMapping("/sequent/{sequence}")
 	public String sequentToMove(@PathVariable String sequence) {
 
 		System.out.println("sequence is: " + sequence);
-		servoService.movementsSequence(sequence);
-
-		return "sekwencja wykonana!!";
+		servoService.movementBySequence(sequence);
+		return "sequent ready";
 
 	}
 

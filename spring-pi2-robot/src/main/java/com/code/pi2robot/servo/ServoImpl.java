@@ -10,7 +10,7 @@ import com.pi4j.wiringpi.SoftPwm;
 @Primary
 @Component
 @Scope("prototype")
-public class ServoImpl implements Servo{
+public class ServoImpl implements Servo {
 
 	private int PIN_NUMBER;
 	private final static int minPosition = 4;
@@ -33,7 +33,7 @@ public class ServoImpl implements Servo{
 		SoftPwm.softPwmWrite(PIN_NUMBER, currPosition);
 	}
 
-	@Override	
+	@Override
 	public void changeServoPosition(int nextPosition) {
 		if (nextPosition != currPosition && nextPosition >= minPosition && nextPosition <= maxPosition) {
 			currentPosition(nextPosition);
