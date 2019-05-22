@@ -2,7 +2,7 @@ package com.code.pi2robot.service;
 
 public interface ServoService {
 
-	public void walk();
+	public void walk(String steps);
 	
 	public void moveServo1();
 	

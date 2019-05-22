@@ -1,6 +1,7 @@
 package com.code.pi2robot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ public class RestServoController {
 
 	@GetMapping("/light")
 	public String light() {
-		
+
 		if (pin == null) {
 			GpioController gpio = GpioFactory.getInstance();
 			pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "My LED", PinState.LOW);
@@ -41,7 +42,7 @@ public class RestServoController {
 
 		servoService.moveServo1();
 		return "servo on!!";
-		
+
 	}
 
 	@GetMapping("/servo2")
@@ -49,7 +50,7 @@ public class RestServoController {
 
 		servoService.moveServo2();
 		return "servo2 on!!";
-		
+
 	}
 
 	@GetMapping("/servo3")
@@ -57,7 +58,7 @@ public class RestServoController {
 
 		servoService.moveServo3();
 		return "servo3 on!!";
-		
+
 	}
 
 	@GetMapping("/servo4")
@@ -65,7 +66,7 @@ public class RestServoController {
 
 		servoService.moveServo4();
 		return "servo4 on!!";
-		
+
 	}
 
 	@GetMapping("/test/{intPosition}")
@@ -76,13 +77,21 @@ public class RestServoController {
 
 	}
 
-	@GetMapping("/walk")
-	public String walk() {
+	@GetMapping({ "/walk", "/walk/{steps}" })
+	public String walk(@PathVariable(name = "steps", required = false) String steps) {
 
-		servoService.walk();
+		if (StringUtils.isEmpty(steps)) {
+			servoService.walk("1");
+		} else {
+			servoService.walk(steps);
+		}
+
+		System.out.println("Steps from walk:" + steps);
+
 		return "I am walking!!";
-		
+
 	}
+
 
 	@GetMapping("/sequent/{sequence}")
 	public String sequentToMove(@PathVariable String sequence) {

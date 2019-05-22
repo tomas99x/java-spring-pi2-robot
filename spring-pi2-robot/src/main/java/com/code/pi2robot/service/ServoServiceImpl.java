@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.code.pi2robot.servo.Servo;
 
+
 @Service
 public class ServoServiceImpl implements ServoService {
 
@@ -58,42 +59,49 @@ public class ServoServiceImpl implements ServoService {
 		switch (intPosition / 100) {
 		case 1:
 			servo1.changeServoPosition(intPosition % 100);
-			System.out.println("move to pos: " + intPosition );
+			System.out.println("move to pos: " + intPosition);
 			break;
 		case 2:
 			servo2.changeServoPosition(intPosition % 100);
-			System.out.println("move to pos: " + intPosition );
+			System.out.println("move to pos: " + intPosition);
 			break;
 		case 3:
 			servo3.changeServoPosition(intPosition % 100);
-			System.out.println("move to pos: " + intPosition );
+			System.out.println("move to pos: " + intPosition);
 			break;
 		case 4:
 			servo4.changeServoPosition(intPosition % 100);
-			System.out.println("move to pos: " + intPosition );
+			System.out.println("move to pos: " + intPosition);
 			break;
 
 		default:
 			break;
 		}
 
-
-
 	}
 
 	@Override
-	public void walk() {
+	public void walk(String steps) {
 
-		int[] stepsToWalk = {316 , 20 , 416 , 200 , 116 , 20 , 216 , 200 , 114 , 20 , 214 , 20 , 314 , 20 , 414 , 20 , 112 , 20 , 212 , 200 , 312 , 20 , 412 , 200 , 114 , 20 , 214 , 20 , 314 , 20 , 414 , 200};
+		int[] stepsToWalk = { 316, 20, 416, 200, 116, 20, 216, 200, 114, 20, 214, 20, 314, 20, 414, 20, 112, 20, 212,
+				200, 312, 20, 412, 200, 114, 20, 214, 20, 314, 20, 414, 200 };
 
-		for (int i = 0; i < stepsToWalk.length; i+=2) {
-			moveServoTo(stepsToWalk[i]);
-			System.out.print("walk step : " + stepsToWalk[i] + "  ");
-			try {
-				Thread.sleep(stepsToWalk[i+1]);
-				System.out.println("walk time : " + stepsToWalk[i+1] );
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		int stepsInt = stringToInt(steps);
+
+		if (stepsInt == 0)
+			stepsInt = 1;
+
+		for (int x = 0; x < stepsInt; x++) {
+
+			for (int i = 0; i < stepsToWalk.length; i += 2) {
+				moveServoTo(stepsToWalk[i]);
+				System.out.print("walk step : " + stepsToWalk[i] + "  ");
+				try {
+					Thread.sleep(stepsToWalk[i + 1]);
+					System.out.println("walk time : " + stepsToWalk[i + 1]);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
