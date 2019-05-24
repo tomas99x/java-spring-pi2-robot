@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.code.pi2robot.servo.Servo;
 
-
 @Service
 public class ServoServiceImpl implements ServoService {
 
@@ -103,6 +102,7 @@ public class ServoServiceImpl implements ServoService {
 					e.printStackTrace();
 				}
 			}
+			System.out.println("=========================================================");
 		}
 	}
 

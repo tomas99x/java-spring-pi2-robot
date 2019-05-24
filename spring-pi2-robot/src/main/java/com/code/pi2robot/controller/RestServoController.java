@@ -1,10 +1,12 @@
 package com.code.pi2robot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import com.code.pi2robot.entity.StepsNumber;
 import com.code.pi2robot.service.ServoService;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
@@ -20,10 +22,17 @@ public class RestServoController {
 
 	public static GpioPinDigitalOutput pin;
 
-	@GetMapping("/")
-	public String greeting() {
-		return "Hello World!!";
-	}
+	/*
+	 * ModelAndView mavIndex = new ModelAndView("index"); // Goruntulenecek sayfanin
+	 * adi (view page name)
+	 * 
+	 * 
+	 * 
+	 * @RequestMapping(value = "/") public ModelAndView index(Principal principal) {
+	 * String user = principal.getName(); // Login olan kullanicinin username'i |
+	 * Username of the login user mavIndex.addObject("principal", user); return
+	 * mavIndex; }
+	 */
 
 	@GetMapping("/light")
 	public String light() {
@@ -77,21 +86,16 @@ public class RestServoController {
 
 	}
 
-	@GetMapping({ "/walk", "/walk/{steps}" })
-	public String walk(@PathVariable(name = "steps", required = false) String steps) {
+	@PostMapping({ "/walk" })
+	public String walk(@RequestBody StepsNumber theStepsNumber) {
 
-		if (StringUtils.isEmpty(steps)) {
-			servoService.walk("1");
-		} else {
-			servoService.walk(steps);
-		}
+		servoService.walk(theStepsNumber.getStepsNumber());
 
-		System.out.println("Steps from walk:" + steps);
+		System.out.println("Steps from walk:" + theStepsNumber.getStepsNumber());
 
 		return "I am walking!!";
 
 	}
-
 
 	@GetMapping("/sequent/{sequence}")
 	public String sequentToMove(@PathVariable String sequence) {

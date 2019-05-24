@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import com.pi4j.wiringpi.Gpio;
 import com.pi4j.wiringpi.SoftPwm;
 
-@Primary
+//@Primary
 @Component
 @Scope("prototype")
 public class ServoImpl implements Servo {
